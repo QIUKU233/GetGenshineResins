@@ -1,0 +1,19 @@
+# 米友社原神查询
+
+## 给朋友写的,我已经不玩这个游戏了
+
+## 一切安全! 不要你号!
+
+# 使用方法
+
+1. 先在Chrome浏览器(其他浏览器自行想办法解决debugger中断问题)里 [米友社网页](https://bbs.mihoyo.com/ys/) 登录你的号
+2. 然后按F12 他会给你中断
+   ![](./img/1.png)
+3. 然后你按Ctrl+F8或者点这个就可以
+   ![](./img/2.png)
+4. 然后在控制台里运行下面这段代码点确定
+
+var cookie=document.cookie;var ask=confirm('Cookie:'+cookie+'\n\nDo you want to copy the cookie to the clipboard?');if(ask==true){copy(cookie);msg=cookie}else{msg='Cancel'}
+
+5. 给`GenshinQuery`类填充cookie参数按Ctrl+C粘贴进去
+   ![](./img/3.png)
