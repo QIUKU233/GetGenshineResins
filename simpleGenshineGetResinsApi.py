@@ -9,8 +9,8 @@ import spiderRobot
 
 
 ##这里设置个人信息
-GenshinID = "110457304" ##-------------非UID，是米游社id:306029388 uid:110457304
-cookie = "UM_distinctid=17f8db4b32d8c-0ffa3c150a1e99-56171d51-144000-17f8db4b32e3f; _MHYUUID=f1f89b39-ec7c-4836-8b52-90f14f38ee1e; mi18nLang=zh-cn; _ga=GA1.2.2011675086.1647349906; _ga_R8CG4VZ69C=GS1.1.1650699888.1.1.1650700148.0; _gid=GA1.2.11261065.1651675101; ltoken=weTSg29wvNtzhUmHrv50TRrBfDzIoUsIYtFaDuRd; ltuid=306029388; cookie_token=forIn80XSm10pKPNTATgNEekQIjRs2DS5QT1PI37; account_id=306029388; CNZZDATA1275023096=85683300-1647344570-%7C1651682064"
+GenshinID = "***" ##-------------这里填原神内uid
+cookie = "***"##-----------这里填cookie
 
 ##这里设置mhy信息
 salt = "xV8v4Qu54lUKrEYFZkJhB8cuOh9Asafs"
