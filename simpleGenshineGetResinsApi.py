@@ -12,7 +12,7 @@ import spiderRobot
 
 ##这里设置个人信息
 GenshinID = "" ##-------------原神UID
-cookie = ""
+cookie = "" ##-------------cookie
 
 ##这里设置mhy信息
 salt = "xV8v4Qu54lUKrEYFZkJhB8cuOh9Asafs"
