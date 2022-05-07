@@ -1,3 +1,5 @@
+import datetime
+
 import requests
 import random
 import time
@@ -9,8 +11,8 @@ import spiderRobot
 
 
 ##这里设置个人信息
-GenshinID = "***" ##-------------这里填原神内uid
-cookie = "***"##-----------这里填cookie
+GenshinID = "" ##-------------原神UID
+cookie = ""
 
 ##这里设置mhy信息
 salt = "xV8v4Qu54lUKrEYFZkJhB8cuOh9Asafs"
@@ -73,18 +75,83 @@ def md5(text):
 ##处理返回信息
 ##current_resin,max_resin,expected_resin_recovery_time=simpleGenshineHandle.handleReq(req)
 
-def main():
-    ##获取树脂
+#此函数控制某个机器人是否发消息
+def main(Res,Que,Coi,req):
+    ##----树脂板块
+    if(Res==True):
+      getResinNow(req)
+    ##-------获取委托
+    if (Res == True):
+      getQuestNow(req)
+    ##------------阿圆洞天宝钱
+    if (Res == True):
+      getCoinNow(req)
+
+##向钉钉发送消息(树脂板块)
+def getResinNow(req):
+    current_resin,max_resin,expected_resin_recovery_time= simpleGenshineHandle.handleReq1(req)
+    c0 = "  旅行者:  " + GenshinID + " \n---\n"
+    c1 = "**当前：**"
+    # resin>=140时让字体变红
+    if (current_resin < 140):
+        content = c1 + " **<font color=#008000>" + str(current_resin) + "</font>** " + " **<font>/160</font>** "
+    elif (current_resin >= 140):
+        content = c1 + " **<font color=#ff0000>" + str(current_resin) + "</font>** " + " **<font>/160</font>** "
+
+    spiderRobot.getDingMes(content, expected_resin_recovery_time)
+
+
+##-------获取委托
+def getCoinNow(req):
+         #如果没有做委托则提醒
+    finished_task_num, total_task_num,is_extra_task_reward_received, current_expedition_num, expeditions_finish_num = simpleGenshineHandle.handleReq2(req)
+    spiderRobot.getDingMes2(finished_task_num, total_task_num,is_extra_task_reward_received, current_expedition_num, expeditions_finish_num)
+
+##------------阿圆洞天宝钱
+def getQuestNow(req):
+    current_home_coin,max_home_coin,expected_home_coin_recovery_time = simpleGenshineHandle.handleReq3(req)
+    spiderRobot.getDingMes3(current_home_coin,max_home_coin,expected_home_coin_recovery_time)
+
+#运行此方法即可
+#ACTION控制的情况有：（委托奖励领取不运行委托）（宝钱不到1980宝钱不运行宝钱），树脂大于140时运行，宝钱大于2200*0.9=1980时运行，17点委托没做或者委托奖励没领取时时运行
+#由于体力8分钟回复一点 排除晚上00--8：00运行时间 8:00 11:00 14:00 17:00 20:00 23:00
+def action():
+    #获取当前时间
+    SYSTEM_TIME = datetime.datetime.now()
+    hour1 = str(SYSTEM_TIME)[11]
+    hour2 = str(SYSTEM_TIME)[12]
+    min1 = str(SYSTEM_TIME)[14]
+    min2 = str(SYSTEM_TIME)[15]
+
+    #08:00的第一次运行
     req = getResins()
-         ##处理返回信息
-    current_resin,max_resin,expected_resin_recovery_time= simpleGenshineHandle.handleReq(req)
-   # if(int(current_resin)>=120):
-        ##向钉钉发送消息
-    c0 = "旅行者:"+GenshinID+"\n---\n"
-    c1 = "当前："
-    content=c0+c1+"<font color=#008000>"+str(current_resin)+"</font><font>/160</font>"
-    print(content)
-    spiderRobot.getDingMes(content,expected_resin_recovery_time)
- #   else:
-   #     print("树脂回复还没准备满")
-main()
+    data = json.loads(req.text)
+    data = data['data']
+    current_resin = data['current_resin']
+    is_extra_task_reward_received = data['is_extra_task_reward_received']
+    current_home_coin = data['current_home_coin']
+    max_home_coin = data['max_home_coin']
+
+    #8点and 23点的提醒
+    if (int(hour1)*10 + int(hour2) >= 8):
+        if (current_resin >= 120 and is_extra_task_reward_received == False and current_home_coin >= max_home_coin * 0.7):
+            main(True, True, True,req)
+        elif (current_resin >= 120 and is_extra_task_reward_received == False and current_home_coin <= max_home_coin * 0.7):
+            main(t, True, False,req)
+        elif (current_resin >= 120 and is_extra_task_reward_received == True and current_home_coin >= max_home_coin * 0.7):
+            main(True, False, True,req)
+        elif (current_resin >= 120 and is_extra_task_reward_received == True and current_home_coin <= max_home_coin * 0.7):
+            main(True, False,False,req)
+        elif (current_resin <= 120 and is_extra_task_reward_received == False and current_home_coin >= max_home_coin * 0.7):
+            main(False,True,True,req)
+        elif (current_resin <= 120 and is_extra_task_reward_received == False and current_home_coin<=max_home_coin*0.7):
+            main(False, True, False,req)
+        elif (current_resin <= 120 and is_extra_task_reward_received == True and current_home_coin <= max_home_coin * 0.7):
+            main(False,False,False,req)
+        elif (current_resin <= 120 and is_extra_task_reward_received == True and current_home_coin >= max_home_coin * 0.7):
+            main(False,False,True,req)
+
+    #此后每间隔半个小时运行一次，每次计算资源数量
+
+
+action()
