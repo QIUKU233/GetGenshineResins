@@ -8,7 +8,7 @@ Genshine get resins IN **python**
 1、获取cookie 
     进入米游社官网(https://bbs.mihoyo.com/ys/)--登录--F12中断--中断控制台里输入代码并回车
     
-    ![image]
+    ![image text]
     (https://github.com/QIUKU233/GenshineResins/blob/master/how_to_get_cookie.png?raw=true)
 
     
