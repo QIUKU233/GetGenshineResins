@@ -20,7 +20,8 @@
 ---登录自己的账号
 ---按下F12进行中断
 ---把getcookie.text里的代码复制到控制台获取cookie
-
+2、到 simpleGenshineGetResinsApi.py 里把自己的UID和cookie粘贴进去
+3、到钉钉创建一个群（可以拉两个小伙伴创群然后再把他们踢了），创建自定义机器人
 注意事项：
 ---登录成功后若登出则cookie会失效（浏览器可以关闭）
 
