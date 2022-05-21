@@ -16,7 +16,7 @@ cookie = "" ##-------------cookie
 
 ##这里设置mhy信息
 salt = "xV8v4Qu54lUKrEYFZkJhB8cuOh9Asafs"
-dailyNoteURL = "https://api-takumi.mihoyo.com/game_record/app/genshin/api/dailyNote?server=cn_gf01&role_id=" + GenshinID
+dailyNoteURL = "https://api-takumi-record.mihoyo.com/game_record/app/genshin/api/dailyNote?server=cn_gf01&role_id=" + GenshinID
 mhyVersion = "2.27.2"##"2.11.1"
 client_type = "5"
 
